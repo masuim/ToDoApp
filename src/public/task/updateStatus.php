@@ -17,4 +17,4 @@ if ($changeIsComplete == '完了') {
 $tasksDao = new TasksDao();
 $tasksDao->updateTaskStatus($statusNum, $taskId);
 
-Redirect::handler('index.php');
+Redirect::handler('./../index.php');

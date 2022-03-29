@@ -1,5 +1,5 @@
 <?php
-require_once __DIR__ . '/../../../vendor/autoload.php';
+require_once __DIR__ . '/../../vendor/autoload.php';
 
 use App\Lib\Session;
 use App\Infrastructure\Redirect\Redirect;
@@ -22,19 +22,21 @@ if (isset($_GET['createCategoryButton'])) {
             'categoryName',
             FILTER_SANITIZE_FULL_SPECIAL_CHARS
         );
-        $categoriesDao = new CategoriesDao();
-        $categoriesDao->createCategory($categoryName, $userId);
+        Redirect::handler("store.php?userId=$userId & name=$categoryName");
     }
 }
 
 if (isset($_GET['id'])) {
-    $categoryrId = filter_input(INPUT_GET, 'id', FILTER_SANITIZE_SPECIAL_CHARS);
-    $categoriesDao = new CategoriesDao();
-    $categoriesDao->deleteCategory($categoryrId);
+    $categoryId = filter_input(INPUT_GET, 'id', FILTER_SANITIZE_SPECIAL_CHARS);
+    Redirect::handler("delete.php?categoryId=$categoryId");
 }
 
 $categoriesDao = new CategoriesDao();
 $categories = $categoriesDao->selectCategories($userId);
+
+if ($_GET['error']) {
+    $error = $_GET['error'];
+}
 ?>
   
 <!DOCTYPE html>
@@ -48,11 +50,13 @@ $categories = $categoriesDao->selectCategories($userId);
   </head>
   <body>
     <header>
-      <?php require_once __DIR__ . '/../../../app/Lib/header.php'; ?>
+      <?php require_once __DIR__ . '/../../app/Lib/header.php'; ?>
     </header>
     <div class="bg-gray-200 w-full h-screen flex justify-center items-center">
       <div class="w-1/2 h-2/3 bg-white pt-10 pb-10 rounded-xl">   
         <h2 class="mb-2 px-2 text-4xl font-bold">カテゴリー一覧</h2> 
+        <div>
+        </div>
           <form action="" method="get">
           <?php if ($error): ?>
               <p class="text-red-600"><?php echo $error; ?></p>
@@ -73,7 +77,7 @@ $categories = $categoriesDao->selectCategories($userId);
                       ]; ?>">編集</a></button>
                     </td>
                     <td>
-                      <button type="submit" name="deteleCategory" class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"><a href="index.php?id=<?php echo $value[
+                      <button class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"><a href="delete.php?id=<?php echo $value[
                           'id'
                       ]; ?>">削除</a></button>
                     </td>
@@ -83,7 +87,7 @@ $categories = $categoriesDao->selectCategories($userId);
             </table>
           </form>
           <div>
-            <a class="text-blue-600" href="./../index.php">戻る</a>
+            <a class="text-blue-600" href="/index.php">戻る</a>
           </div>
       </div>
     </div>

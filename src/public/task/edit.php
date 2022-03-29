@@ -40,9 +40,7 @@ if (isset($_POST['editTaskButton'])) {
       if($editdeadline < $today) {
         $error = "今日より前の日付が入力されています。日付を修正してください";
       } else {
-        $tasksDao = new TasksDao();
-        $tasksDao->updateTask($contents, $editdeadline, $taskId);
-        Redirect::handler('index.php');
+        Redirect::handler("update.php?contents=$contents &editdeadline=$editdeadline &taskId=$taskId");
       }
     }  
   }
@@ -86,7 +84,7 @@ if (isset($_POST['editTaskButton'])) {
             </div>
           </form>
           <div>
-            <a class="text-blue-600 ml-20" href="./index.php">戻る</a>
+            <a class="text-blue-600 ml-20" href="./../index.php">戻る</a>
           </div>
         </div>
       </div>

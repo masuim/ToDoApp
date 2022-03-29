@@ -8,4 +8,4 @@ $taskId = filter_input(INPUT_GET, 'taskId', FILTER_SANITIZE_SPECIAL_CHARS);
 $TasksDao = new TasksDao();
 $TasksDao->deleteTask($taskId);
 
-Redirect::handler('./index.php');
+Redirect::handler('./../index.php');

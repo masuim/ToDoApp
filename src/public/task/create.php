@@ -37,10 +37,7 @@ if (isset($_POST['createTask'])) {
         $categoriesDao = new CategoriesDao();
         $id = $categoriesDao->createCategoryAndGetId($selectCategory, $userId);
       }
-      $tasksDao = new TasksDao();
-      $tasksDao->createTask($userId, $contents, $id, $deadline);
-
-      Redirect::handler('index.php');
+      Redirect::handler("store.php?userId=$userId & contents=$contents & id=$id & deadline=$deadline");
     }
   } else {
     $error = "タスク内容または日付を入力してください";
@@ -68,9 +65,12 @@ if (isset($_POST['createTask'])) {
             <?php if ($error): ?>
               <p class="text-red-600"><?php echo $error; ?></p>
             <?php endif; ?>
+            <div>
+              <a class="text-blue-600 ml-20" href="./../category/index.php">カテゴリを追加</a>
+            </div>
             <div class="flex">
               <select name="selectCategory">
-                <option value=""></option>
+                <option value=""><?php echo "カテゴリーを選んでください"; ?></option>
                   <?php foreach ( $getCategories as $value ) : ?>
                     <option class="text-right" value="<?php echo $value["name"]; ?>" name="categoryName"><?php echo $value["name"]; ?></option>
                   <? endforeach; ?>
@@ -81,7 +81,7 @@ if (isset($_POST['createTask'])) {
             </div>
           </form>
         <div>
-        <a class="text-blue-600 ml-20" href="./index.php">戻る</a>
+        <a class="text-blue-600 ml-20" href="./../index.php">戻る</a>
       </div>
     </div>
   </body>

@@ -66,10 +66,10 @@ final class CategoriesDao extends Dao
 
     /**
      * カテゴリを編集する
-     * @param  int $categoryrId
+     * @param  int $categoryId
      * @param  string $updateCategory
      */
-    public function editCategory(int $categoryrId, string $updateCategory): void
+    public function editCategory(int $categoryId, string $updateCategory): void
     {
         $sql = sprintf(
             'UPDATE %s SET name=:name WHERE id=:id',
@@ -77,7 +77,7 @@ final class CategoriesDao extends Dao
         );
         $statement = $this->pdo->prepare($sql);
         $statement->bindValue(':name', $updateCategory, PDO::PARAM_STR);
-        $statement->bindValue(':id', $categoryrId, PDO::PARAM_INT);
+        $statement->bindValue(':id', $categoryId, PDO::PARAM_INT);
         $statement->execute();
     }
 
@@ -105,16 +105,13 @@ final class CategoriesDao extends Dao
 
     /**
      * カテゴリーを削除する
-     * @param int $categoryrId
+     * @param int $categoryId
      *
      * @return void
      */
-    public function deleteCategory(int $categoryrId): void
+    public function deleteCategory(int $categoryId): void
     {
-        $sql = sprintf(
-            "DELETE FROM %s WHERE id=$categoryrId",
-            self::TABLE_NAME
-        );
+        $sql = sprintf("DELETE FROM %s WHERE id=$categoryId", self::TABLE_NAME);
         $statement = $this->pdo->prepare($sql);
         $statement->execute();
     }

@@ -1,5 +1,5 @@
 <?php
-require_once __DIR__ . '/../../../vendor/autoload.php';
+require_once __DIR__ . '/../../vendor/autoload.php';
 
 use App\Lib\Session;
 use App\Infrastructure\Redirect\Redirect;
@@ -7,7 +7,11 @@ use App\Infrastructure\Dao\CategoriesDao;
 
 $session = Session::getInstance();
 
-$categoryrId = filter_input(INPUT_GET, 'id', FILTER_SANITIZE_SPECIAL_CHARS);
+$categoryId = (int) filter_input(
+    INPUT_GET,
+    'id',
+    FILTER_SANITIZE_SPECIAL_CHARS
+);
 
 $userId = $_SESSION['user']['id'];
 
@@ -16,7 +20,7 @@ if (empty($userId)) {
 }
 
 $categoriesDao = new CategoriesDao();
-$categoryName = $categoriesDao->selectCategoryName($categoryrId);
+$categoryName = $categoriesDao->selectCategoryName($categoryId);
 
 if (isset($_POST['updateCategory'])) {
     if (empty($_POST['updateCategory'])) {
@@ -27,9 +31,9 @@ if (isset($_POST['updateCategory'])) {
             'updateCategory',
             FILTER_SANITIZE_SPECIAL_CHARS
         );
-        $categoriesDao = new CategoriesDao();
-        $categoriesDao->editCategory($categoryrId, $updateCategory);
-        Redirect::handler('./index.php');
+        Redirect::handler(
+            "update.php?categoryId=$categoryId& updateCategory=$updateCategory"
+        );
     }
 }
 ?>
@@ -45,7 +49,7 @@ if (isset($_POST['updateCategory'])) {
   </head>
   <body>
     <header>
-      <?php require_once __DIR__ . '/../../../app/Lib/header.php'; ?>
+      <?php require_once __DIR__ . '/../../app/Lib/header.php'; ?>
     </header>
     <div class="bg-gray-200 w-full h-screen flex justify-center items-center">
       <div class="w-1/2  bg-white pt-10 pb-10 rounded-xl">
