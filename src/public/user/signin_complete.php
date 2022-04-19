@@ -11,9 +11,8 @@ use App\Infrastructure\Redirect\Redirect;
 $mail = filter_input(INPUT_POST, 'mail');
 $password = filter_input(INPUT_POST, 'password');
 
-$session = Session::getInstance();
-
 try {
+    $session = Session::getInstance();
     if (empty($mail) || empty($password)) {
         throw new Exception('パスワードとメールアドレスを入力してください');
     }
