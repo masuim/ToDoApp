@@ -4,17 +4,19 @@ require_once __DIR__ . '/../../vendor/autoload.php';
 use App\Infrastructure\Dao\TasksDao;
 use App\Infrastructure\Redirect\Redirect;
 
-$changeIsComplete = $_GET['changeIsComplete'];
-$taskId = filter_input(INPUT_GET, 'id', FILTER_SANITIZE_SPECIAL_CHARS);
-$statusNum = filter_input(INPUT_GET, 'status', FILTER_SANITIZE_SPECIAL_CHARS);
-
-if ($changeIsComplete == '未完了') {
-    $statusNum = 0;
+$taskId = (int) filter_input(INPUT_GET, 'id', FILTER_SANITIZE_SPECIAL_CHARS);
+$statusNum = (int) filter_input(
+    INPUT_GET,
+    'status',
+    FILTER_SANITIZE_SPECIAL_CHARS
+);
+if ($statusNum == 0) {
+    $status = 1;
 }
-if ($changeIsComplete == '完了') {
-    $statusNum = 1;
+if ($statusNum == 1) {
+    $status = 0;
 }
 $tasksDao = new TasksDao();
-$tasksDao->updateTaskStatus($statusNum, $taskId);
+$tasksDao->updateTaskStatus($status, $taskId);
 
 Redirect::handler('./../index.php');
