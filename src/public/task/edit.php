@@ -15,10 +15,9 @@ if (empty($userId)) {
 }
 
 $taskId = filter_input(INPUT_GET, 'taskId',FILTER_SANITIZE_SPECIAL_CHARS);
-
+$taskId = (int)$taskId;
 $tasksDao = new TasksDao();
 $taskDate = $tasksDao->selectTasksForId($taskId);
-
 
 $categoriesDao = new CategoriesDao();
 $selectCategoryName = $categoriesDao->selectCategoryName($taskDate[0] ["category_id"]);
