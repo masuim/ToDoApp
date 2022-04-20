@@ -61,7 +61,7 @@ if ($_POST['order'] || $_POST['searchWord']) {
 if ($_POST['selectCategory']) {
   $categoryName = $_POST['selectCategory'];
   $categoriesDao = new CategoriesDao();
-  $getCategoryId = $categoriesDao->selectCategoryid($categoryName);
+  $getCategoryId = $categoriesDao->selectCategoryId($categoryName);
   $getCategoryId = (int)$getCategoryId["id"];
 
   $tasksDao = new TasksDao();

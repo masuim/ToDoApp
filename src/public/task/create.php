@@ -28,7 +28,7 @@ if (isset($_POST['createTask'])) {
       $contents = filter_input(INPUT_POST, 'addTask',FILTER_SANITIZE_SPECIAL_CHARS);
       $deadline = filter_input(INPUT_POST, 'date',FILTER_SANITIZE_SPECIAL_CHARS);
       $categoriesDao = new CategoriesDao();
-      $categoryId = $categoriesDao->selectCategoryid($selectCategory);
+      $categoryId = $categoriesDao->selectCategoryId($selectCategory);
       if($categoryId) {
         $id = $categoryId["id"];
       } else {

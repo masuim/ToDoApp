@@ -54,7 +54,7 @@ final class CategoriesDao extends Dao
      * @param  string $selectCategory
      * @return array | null
      */
-    public function selectCategoryid(string $selectCategory): ?array
+    public function selectCategoryId(string $selectCategory): ?array
     {
         $sql = sprintf('SELECT id FROM %s WHERE name= :name', self::TABLE_NAME);
         $statement = $this->pdo->prepare($sql);
