@@ -6,7 +6,7 @@ use App\Infrastructure\Dao\TasksDao;
 
 $userId = $_GET['userId'];
 $contents = $_GET['contents'];
-$id = $_GET['id'];
+$id = (int) $_GET['id'];
 $deadline = $_GET['deadline'];
 
 $tasksDao = new TasksDao();

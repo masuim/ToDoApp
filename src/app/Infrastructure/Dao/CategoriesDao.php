@@ -51,14 +51,14 @@ final class CategoriesDao extends Dao
 
     /**
      * カテゴリのidを取得する（categoriesテーブルのname指定）
-     * @param  string $addCategory
+     * @param  string $selectCategory
      * @return array | null
      */
-    public function selectCategoryid(string $addCategory): ?array
+    public function selectCategoryId(string $selectCategory): ?array
     {
         $sql = sprintf('SELECT id FROM %s WHERE name= :name', self::TABLE_NAME);
         $statement = $this->pdo->prepare($sql);
-        $statement->bindValue(':name', $addCategory, PDO::PARAM_STR);
+        $statement->bindValue(':name', $selectCategory, PDO::PARAM_STR);
         $statement->execute();
         $categoryId = $statement->fetch(PDO::FETCH_ASSOC);
         return $categoryId ? $categoryId : null;
@@ -114,5 +114,28 @@ final class CategoriesDao extends Dao
         $sql = sprintf("DELETE FROM %s WHERE id=$categoryId", self::TABLE_NAME);
         $statement = $this->pdo->prepare($sql);
         $statement->execute();
+    }
+
+    /**
+     * カテゴリー情報を取得する（categoryName一致するもの, userId指定）
+     * @param string $categoryName
+     * @param int $userId
+     *
+     * @return array | null
+     */
+    public function findCategoryByName(
+        string $categoryName,
+        int $userId
+    ): ?array {
+        $sql = sprintf(
+            'SELECT * FROM %s WHERE name = :categoryName AND user_id = :userId',
+            self::TABLE_NAME
+        );
+        $statement = $this->pdo->prepare($sql);
+        $statement->bindValue(':categoryName', $categoryName, PDO::PARAM_STR);
+        $statement->bindValue(':userId', $userId, PDO::PARAM_INT);
+        $statement->execute();
+        $categoryMapper = $statement->fetch(PDO::FETCH_ASSOC);
+        return $categoryMapper ? $categoryMapper : null;
     }
 }

@@ -6,6 +6,7 @@ use App\Infrastructure\Redirect\Redirect;
 use App\Infrastructure\Dao\CategoriesDao;
 
 $session = Session::getInstance();
+$errors = $session->popAllErrors();
 
 $userId = $_SESSION['user']['id'];
 
@@ -15,7 +16,7 @@ if (empty($userId)) {
 
 if (isset($_GET['createCategoryButton'])) {
     if (empty($_GET['categoryName'])) {
-        $error = '何も入力されていません';
+        $session->appendError('何も入力されていません');
     } else {
         $categoryName = filter_input(
             INPUT_GET,
@@ -33,10 +34,6 @@ if (isset($_GET['id'])) {
 
 $categoriesDao = new CategoriesDao();
 $categories = $categoriesDao->selectCategories($userId);
-
-if ($_GET['error']) {
-    $error = $_GET['error'];
-}
 ?>
   
 <!DOCTYPE html>
@@ -58,8 +55,10 @@ if ($_GET['error']) {
         <div>
         </div>
           <form action="" method="get">
-          <?php if ($error): ?>
-              <p class="text-red-600"><?php echo $error; ?></p>
+            <?php if ($errors): ?>
+              <?php foreach ($errors as $error): ?>
+                  <p class="text-red-600"><?php echo $error; ?></p>
+              <?php endforeach; ?>
             <?php endif; ?>
             <div class="block ">
               <input class="border-black h-5 w-50 p-4 border-2 bg-white" type="text" name="categoryName">

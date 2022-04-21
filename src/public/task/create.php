@@ -27,15 +27,13 @@ if (isset($_POST['createTask'])) {
     if(!empty($_POST['date'])) {
       $contents = filter_input(INPUT_POST, 'addTask',FILTER_SANITIZE_SPECIAL_CHARS);
       $deadline = filter_input(INPUT_POST, 'date',FILTER_SANITIZE_SPECIAL_CHARS);
-
       $categoriesDao = new CategoriesDao();
-      $categoryId = $categoriesDao->selectCategoryid($selectCategory);
-      
+      $categoryId = $categoriesDao->selectCategoryId($selectCategory);
       if($categoryId) {
         $id = $categoryId["id"];
       } else {
         $categoriesDao = new CategoriesDao();
-        $id = $categoriesDao->createCategoryAndGetId($selectCategory, $userId);
+        $id = $categoriesDao->createCategory($selectCategory, $userId);
       }
       Redirect::handler("store.php?userId=$userId & contents=$contents & id=$id & deadline=$deadline");
     }

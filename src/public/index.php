@@ -5,6 +5,10 @@ use App\Lib\Session;
 use App\Infrastructure\Redirect\Redirect;
 use App\Infrastructure\Dao\TasksDao;
 use App\Infrastructure\Dao\CategoriesDao;
+use App\Domain\ValueObject\Task\SearchWord;
+use App\UseCase\UseCaseInput\SearchTaskInput;
+use App\UseCase\UseCaseInteractor\SearchTaskInteractor;
+use App\Adapter\Presenter\SearchTaskPresenter;
 
 $session = Session::getInstance();
 if (!isset($_SESSION['user']['id'])) {
@@ -15,11 +19,15 @@ $userId = $_SESSION['user']['id'];
 $name = $_SESSION['user']['name'];
 
 $tasksDao = new TasksDao();
-$taskDate = $tasksDao->selectTasks($userId);
+$taskForWeb = $tasksDao->selectTasks($userId);
 
 $categoriesDao = new CategoriesDao();
 $getCategories = $categoriesDao->selectCategories($userId);
 
+$direction = 'desc';
+if (isset($_POST['order'])) {
+    $direction = $_POST['order'];
+}
 
 $changeIsComplete = NULL;
 if($_POST['isComplete']){
@@ -35,42 +43,34 @@ if($_POST['isComplete']){
     $status = 1;
   }
   $tasksDao = new TasksDao();
-  $taskDate = $tasksDao->selectForEachStatusTasks($status, $userId); 
+  $taskForWeb = $tasksDao->selectForEachStatusTasks($status, $userId, $direction); 
 }
 
-$direction = 'desc';
-if (isset($_POST['order'])) {
-    $direction = $_POST['order'];
-}
 
-$contentsWord = '%%';
-if (isset($_POST['searchWord'])) {
-  $searchWord = filter_input(INPUT_POST, 'searchWord',FILTER_SANITIZE_SPECIAL_CHARS);
-  $contentsWord = '%' . $searchWord . '%';  
-}
 
+$word = '%%';
 if ($_POST['order'] || $_POST['searchWord']) {
-    $tasksDao = new TasksDao();
-    $taskDate = $tasksDao->sortAndSearchTasks(
-        $userId,
-        $direction,
-        $contentsWord
-    );
+  $word = '%' . $_POST['searchWord'] . '%';  
+  $searchWord = new SearchWord($word);
+  $searchTaskInput = new SearchTaskInput($searchWord);
+  $searchTaskInteractor = new SearchTaskInteractor($searchTaskInput, $direction);
+  $searchTaskPresenter = new SearchTaskPresenter($searchTaskInteractor->handler());
+  $taskForWeb = $searchTaskPresenter->createTaskView();
 }
 
 if ($_POST['selectCategory']) {
   $categoryName = $_POST['selectCategory'];
   $categoriesDao = new CategoriesDao();
-  $getCategoryId = $categoriesDao->selectCategoryid($categoryName);
+  $getCategoryId = $categoriesDao->selectCategoryId($categoryName);
   $getCategoryId = (int)$getCategoryId["id"];
 
   $tasksDao = new TasksDao();
-  $taskDate = $tasksDao->selectCategories($userId, $getCategoryId);
+  $taskForWeb = $tasksDao->selectCategories($userId, $getCategoryId);
 }
 
 if (isset($_GET['categoryId'])) {
     $tasksDao = new TasksDao();
-    $taskDate = $tasksDao->selectCategories($userId, $getCategoryId);
+    $taskForWeb = $tasksDao->selectCategories($userId, $getCategoryId);
 }
 ?>
 
@@ -113,8 +113,8 @@ if (isset($_GET['categoryId'])) {
     </div>      
 
     <div class="mb-5 inline">
-      <label><input type="radio" name="isComplete" value="inComplete">未完了</label>
-      <label><input type="radio" name="isComplete" value="complete">完了</label>
+      <label><input type="radio" name="isComplete" value="inComplete">完了</label>
+      <label><input type="radio" name="isComplete" value="complete">未完了</label>
       
     </div>
 
@@ -140,37 +140,28 @@ if (isset($_GET['categoryId'])) {
           <th class="px-4 py-2">削除</th>
         </tr>
       </thead>
-      <?php if ($taskDate): ?>
-        <?php foreach ($taskDate as $date): ?>
+      <?php if ($taskForWeb): ?>
+        <?php foreach ($taskForWeb as $task): ?>
           <tbody>
             <tr>
-              <td class="border px-4 py-2"><?php echo $date['contents']; ?></td>
-              <td class="border px-4 py-2"><?php echo $date['deadline']; ?></td>
-              <td class="border px-4 py-2 text-blue-500"><a href="./index.php?categoryId=<?php echo $date[
-                  'category_id'
-              ]; ?>
-              &userId=<?php echo $date['user_id']; ?>"><?php echo $date[
-    'name'
-]; ?></a></td>
-              <?php if (is_null($changeIsComplete)): ?>
-                <?php if ($date["status"] == 0) : ?><td class="border px-4 py-2">完了</td><?php endif; ?>
-                <?php if ($date["status"] == 1) : ?><td class="border px-4 py-2">未完了</td><?php endif; ?>
-              <?php endif; ?>
-              <?php if ($changeIsComplete): ?>
+              <td class="border px-4 py-2"><?php echo $task['contents']; ?></td>
+              <td class="border px-4 py-2"><?php echo $task['deadline']; ?></td>
+              <td class="border px-4 py-2"><?php echo $task['name']; ?></td>
+              <?php if ($task["status"] == 0) : ?>
                 <td class="border px-4 py-2">
-                    <a href='__DIR__."/../task/updateStatus.php?changeIsComplete=<?php echo $changeIsComplete; ?>&id=<?php echo $date[
-    'id'
-]; ?>&status=<?php echo $status; ?>" '>
-                      <?php echo $changeIsComplete; ?>
-                    </a>
+                  <a href='__DIR__."/../task/updateStatus.php?id=<?php echo $task['id']; ?>&status=<?php echo $task["status"]; ?>" '>完了</a>
                 </td>
               <?php endif; ?>
-              
-              
-              <td class="border px-4 py-2"><button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-3 px-4 m-1 rounded"><a href="./task/edit.php?taskId=<?php echo $date[
+
+              <?php if ($task["status"] == 1) : ?>
+                <td class="border px-4 py-2">
+                  <a href='__DIR__."/../task/updateStatus.php?&id=<?php echo $task['id']; ?>&status=<?php echo $task["status"]; ?>" '>未完了</a>
+                </td>
+              <?php endif; ?>              
+              <td class="border px-4 py-2"><button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-3 px-4 m-1 rounded"><a href="./task/edit.php?taskId=<?php echo $task[
                   'id'
               ]; ?>">編集</a></button></td>
-              <td class="border px-4 py-2"><button class="bg-red-500 hover:bg-red-700 text-white font-bold py-3 px-4 rounded"><a href="./task/delete.php?taskId=<?php echo $date[
+              <td class="border px-4 py-2"><button class="bg-red-500 hover:bg-red-700 text-white font-bold py-3 px-4 rounded"><a href="./task/delete.php?taskId=<?php echo $task[
                   'id'
               ]; ?>">削除</a></button></td>
             </tr>

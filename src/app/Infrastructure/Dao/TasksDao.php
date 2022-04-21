@@ -41,30 +41,33 @@ final class TasksDao extends Dao
 
     /**
      * ステータス毎のタスクを取得する（ユーザーのid指定）
-     * @param  int $statusNum
+     * @param  int $status
      * @param  int $userId
+     * @param   string $direction
      * @return array | null
      */
     public function selectForEachStatusTasks(
-        int $statusNum,
-        int $userId
+        int $status,
+        int $userId,
+        string $direction
     ): ?array {
         $sql = sprintf(
-            'SELECT *
+            "SELECT *
         FROM `categories`
         INNER JOIN %s
         ON tasks.category_id = categories.id
-        WHERE tasks.status = :statusNum
-        AND tasks.user_id = :userId',
+        WHERE tasks.status = :status
+        AND tasks.user_id = :userId
+        ORDER BY tasks.deadline $direction",
             self::TABLE_NAME
         );
 
         $statement = $this->pdo->prepare($sql);
-        $statement->bindValue(':statusNum', $statusNum, PDO::PARAM_INT);
+        $statement->bindValue(':status', $status, PDO::PARAM_INT);
         $statement->bindValue(':userId', $userId, PDO::PARAM_INT);
         $statement->execute();
-        $taskDate = $statement->fetchAll(PDO::FETCH_ASSOC);
-        return $taskDate ? $taskDate : null;
+        $taskForWeb = $statement->fetchAll(PDO::FETCH_ASSOC);
+        return $taskForWeb ? $taskForWeb : null;
     }
 
     /**
@@ -113,48 +116,47 @@ VALUES
 
     /**
      * ステータスを更新する
-     * @param int $statusNum
+     * @param int $status
      * @param int $taskId
      *
      * @return void
      */
-    public function updateTaskStatus(int $statusNum, int $taskId): void
+    public function updateTaskStatus(int $status, int $taskId): void
     {
         $sql = sprintf(
-            'UPDATE %s SET `status` =:statusNum WHERE `tasks`.`id` =:taskId',
+            'UPDATE %s SET `status` =:status WHERE `id` =:taskId',
             self::TABLE_NAME
         );
-
         $statement = $this->pdo->prepare($sql);
-        $statement->bindValue(':statusNum', $statusNum, PDO::PARAM_INT);
+        $statement->bindValue(':status', $status, PDO::PARAM_INT);
         $statement->bindValue(':taskId', $taskId, PDO::PARAM_INT);
         $statement->execute();
+        $statement->fetchAll(PDO::FETCH_ASSOC);
     }
 
     /*タスクの並べ替えとあいまい検索
      * @param int $userId
      * @param string $direction
-     * @param string $contentsWord
+     * @param string $searchWord
      *
      * @return array | null
      */
     public function sortAndSearchTasks(
         int $userId,
         string $direction,
-        string $contentsWord
+        string $searchWord
     ): ?array {
         $sql = sprintf(
-            "SELECT * FROM %s INNER JOIN categories ON tasks.category_id = categories.id WHERE contents LIKE :contentsWord AND
+            "SELECT * FROM %s INNER JOIN categories ON tasks.category_id = categories.id WHERE contents LIKE :searchWord AND
         tasks.user_id = :userId ORDER BY tasks.deadline $direction",
             self::TABLE_NAME
         );
         $statement = $this->pdo->prepare($sql);
         $statement->bindValue(':userId', $userId, PDO::PARAM_INT);
-        $statement->bindValue(':contentsWord', $contentsWord, PDO::PARAM_STR);
+        $statement->bindValue(':searchWord', $searchWord, PDO::PARAM_STR);
         $statement->execute();
-        $taskDate = $statement->fetchAll(PDO::FETCH_ASSOC);
-
-        return $taskDate ? $taskDate : null;
+        $taskMappers = $statement->fetchAll(PDO::FETCH_ASSOC);
+        return $taskMappers ? $taskMappers : null;
     }
 
     /**
@@ -231,5 +233,27 @@ VALUES
         );
         $statement->bindValue(':taskId', $taskId, PDO::PARAM_INT);
         $statement->execute();
+    }
+
+    /**
+     * タスクを取得する（ユーザーid指定）
+     * @param  int $userId
+     * @param string $direction
+     * @return array | null
+     */
+    public function sortTatsks(int $userId, string $direction): ?array
+    {
+        $sql = sprintf(
+            "SELECT *
+        FROM  %s
+        WHERE user_id = :userId
+        ORDER BY deadline $direction",
+            self::TABLE_NAME
+        );
+        $statement = $this->pdo->prepare($sql);
+        $statement->bindValue(':userId', $userId, PDO::PARAM_INT);
+        $statement->execute();
+        $taskForWeb = $statement->fetchAll(PDO::FETCH_ASSOC);
+        return $taskForWeb ? $taskForWeb : null;
     }
 }
