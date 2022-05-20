@@ -33,6 +33,13 @@ $successRegistedMessage = $session->getMessage();
                     <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 rounded mb-5 w-full" type="submit">ログイン</button>
                 </form>
                 <a class="text-blue-500" href="./signup.php">アカウントを作る</a>
+                <div class="text-gray-400 w-60 m-auto text-center pt-10">
+                    <h4>テスト用アカウント</h4>
+                    <p>Email : suzuki@suzuki.com</p>
+                    <p>Password : Suzuki123</p>
+                    <p>name : suzuki</p>
+                </div>
+
             </div>
         </div>
 </body>

@@ -55,7 +55,7 @@ if (isset($_POST['updateCategory'])) {
       <div class="w-1/2  bg-white pt-10 pb-10 rounded-xl">
         <div class="w-full">
           <form action="" method="post">
-            <?php if ($error): ?>
+            <?php if (isset($error)): ?>
               <p class="text-red-600"><?php echo $error; ?></p>
             <?php endif; ?>
             <div>

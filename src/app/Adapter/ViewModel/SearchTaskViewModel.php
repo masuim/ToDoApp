@@ -38,6 +38,7 @@ final class SearchTaskViewModel
     private function createTaskForWeb($taskEntityList)
     {
         foreach ($taskEntityList as $key => $taskEntity) {
+            $taskForWeb[$key]['id'] = $taskEntity->taskId()->value();
             $taskForWeb[$key]['status'] = $taskEntity->status()->value();
             $taskForWeb[$key]['contents'] = $taskEntity->contents()->value();
             $taskForWeb[$key]['deadline'] = $taskEntity->deadline()->value();

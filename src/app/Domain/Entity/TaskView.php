@@ -1,6 +1,7 @@
 <?php
 namespace App\Domain\Entity;
 
+use App\Domain\ValueObject\Task\TaskId;
 use App\Domain\ValueObject\Task\Status;
 use App\Domain\ValueObject\Task\Contents;
 use App\Domain\ValueObject\Task\Deadline;
@@ -11,6 +12,11 @@ use App\Domain\Entity\Category;
  */
 final class TaskView
 {
+    /**
+     * @var TaskId
+     */
+    private $taskId;
+
     /**
      * @var Status
      */
@@ -34,6 +40,7 @@ final class TaskView
     /**
      * コンストラクタ
      *
+     * @param TaskId $taskId
      * @param Status $status
      * @param Contents $contents
      * @param Deadline $deadline
@@ -42,15 +49,25 @@ final class TaskView
      */
 
     public function __construct(
+        TaskId $taskId,
         Status $status,
         Contents $contents,
         Deadline $deadline,
         Category $category
     ) {
+        $this->taskId = $taskId;
         $this->status = $status;
         $this->contents = $contents;
         $this->deadline = $deadline;
         $this->category = $category;
+    }
+
+    /**
+     * @return TaskId
+     */
+    public function taskId(): TaskId
+    {
+        return $this->taskId;
     }
 
     /**

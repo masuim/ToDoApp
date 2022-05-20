@@ -60,7 +60,7 @@ if (isset($_POST['createTask'])) {
       <div class="w-4/5  bg-white pt-10 pb-10 rounded-xl">
         <div class="w-full flex justify-center">
           <form action="" method="post">
-            <?php if ($error): ?>
+            <?php if (isset($error)): ?>
               <p class="text-red-600"><?php echo $error; ?></p>
             <?php endif; ?>
             <div>

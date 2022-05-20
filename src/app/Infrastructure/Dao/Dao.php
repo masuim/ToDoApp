@@ -5,8 +5,8 @@ use \PDO;
 
 abstract class Dao
 {
-    const DB_USER = 'docker';
-    const DB_PASSWORD = 'docker';
+    const DB_USER = 'root';
+    const DB_PASSWORD = 'password';
     const DB_HOST = 'mysql';
     const DB_NAME = 'todo';
 

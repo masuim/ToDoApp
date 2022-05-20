@@ -62,12 +62,11 @@ if (isset($_POST['editTaskButton'])) {
       <div class="w-4/5  bg-white pt-10 pb-10 rounded-xl">
         <div class="w-full">
           <form action="" method="post">
-            <?php if ($error): ?>
+            <?php if (isset($error)): ?>
               <p class="text-red-600"><?php echo $error; ?></p>
             <?php endif; ?>
             <div class="flex">
               <select name="selectCategory">
-               
                 <option class="text-right" value="<?php echo $selectCategoryName["name"]; ?>" name="categoryName" selected><?php echo $selectCategoryName["name"]; ?></option>
                 <?php foreach ( $getCategories as $value ) : ?>
                   <option class="text-right" value="<?php echo $value["name"]; ?>" name="categoryName"><?php echo $value["name"]; ?></option>
