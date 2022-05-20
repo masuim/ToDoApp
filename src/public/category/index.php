@@ -52,21 +52,19 @@ $categories = $categoriesDao->selectCategories($userId);
     <div class="bg-gray-200 w-full h-screen flex justify-center items-center">
       <div class="w-1/2 h-2/3 bg-white pt-10 pb-10 rounded-xl">   
         <h2 class="mb-2 px-2 text-4xl font-bold">カテゴリー一覧</h2> 
-        <div>
-        </div>
-          <form action="" method="get">
-            <?php if ($errors): ?>
-              <?php foreach ($errors as $error): ?>
-                  <p class="text-red-600"><?php echo $error; ?></p>
-              <?php endforeach; ?>
-            <?php endif; ?>
-            <div class="block ">
-              <input class="border-black h-5 w-50 p-4 border-2 bg-white" type="text" name="categoryName">
-              <button name="createCategoryButton" type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">登録</button>
-            </div>
-            <table class="table-auto">
-              <?php if ($categories): ?>
-                <?php foreach ($categories as $value): ?>
+        <form action="" method="get">
+          <?php if ($errors): ?>
+            <?php foreach ($errors as $error): ?>
+                <p class="text-red-600"><?php echo $error; ?></p>
+            <?php endforeach; ?>
+          <?php endif; ?>
+          <div class="block ">
+            <input class="border-black h-5 w-50 p-4 border-2 bg-white" type="text" name="categoryName">
+            <button name="createCategoryButton" type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">登録</button>
+          </div>
+          <table class="table-auto">
+            <?php if ($categories): ?>
+              <?php foreach ($categories as $value): ?>
                 <tbody>
                   <tr>
                     <td><?php echo $value['name']; ?></td>
@@ -81,13 +79,14 @@ $categories = $categoriesDao->selectCategories($userId);
                       ]; ?>">削除</a></button>
                     </td>
                   </tr>
-                <?php endforeach; ?>
-              <?php endif; ?>
-            </table>
-          </form>
-          <div>
-            <a class="text-blue-600" href="/index.php">戻る</a>
-          </div>
+                </tbody>  
+              <?php endforeach; ?>
+            <?php endif; ?>
+          </table>
+        </form>
+        <div>
+          <a class="text-blue-600" href="/task/create.php">戻る</a>
+        </div>
       </div>
     </div>
   </body>
