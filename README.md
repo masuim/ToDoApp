@@ -25,6 +25,12 @@ name : suzuki
 Email : suzuki@suzuki.com  
 Password : Suzuki123
 
+## Docker の起動
+
+```
+./docker-compose-local.sh up
+```
+
 ## ページ紹介
 
 php
