@@ -21,8 +21,8 @@ ToDo リスト
 
 ## テスト用アカウント
 
-name : suzuki
-Email : suzuki@suzuki.com
+name : suzuki  
+Email : suzuki@suzuki.com  
 Password : Suzuki123
 
 ## ページ紹介
