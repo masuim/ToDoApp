@@ -57,6 +57,7 @@ final class SearchTaskQueryServise
         $task = [];
         foreach ($taskMappers as $mapper) {
             $task[] = new TaskView(
+                new TaskId($mapper['id']),
                 new Status($mapper['status']),
                 new Contents($mapper['contents']),
                 new Deadline($mapper['deadline']),
