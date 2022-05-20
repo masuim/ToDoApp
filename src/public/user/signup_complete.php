@@ -48,7 +48,7 @@ try {
     Redirect::handler('./signin.php');
 } catch (Exception $e) {
     $session->appendError($e->getMessage());
-    $_SESSION['user']['name'] = $name;
-    $_SESSION['user']['email'] = $email;
+    $_SESSION['user']['name'] = $userName;
+    $_SESSION['user']['email'] = $mail;
     Redirect::handler('./signup.php');
 }
