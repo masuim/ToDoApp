@@ -147,7 +147,7 @@ VALUES
         string $searchWord
     ): ?array {
         $sql = sprintf(
-            "SELECT * FROM %s INNER JOIN categories ON tasks.category_id = categories.id WHERE contents LIKE :searchWord AND
+            "SELECT * FROM categories INNER JOIN %s ON tasks.category_id = categories.id WHERE contents LIKE :searchWord AND
         tasks.user_id = :userId ORDER BY tasks.deadline $direction",
             self::TABLE_NAME
         );
