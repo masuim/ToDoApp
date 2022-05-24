@@ -30,13 +30,13 @@ final class SearchTaskViewModel
     public function convertToWebView(): ?array
     {
         $taskEntityList = $this->searchTaskOutput->handler();
-        $taskForWeb = [];
         $taskForWeb = $this->createTaskForWeb($taskEntityList);
         return $taskForWeb;
     }
 
     private function createTaskForWeb($taskEntityList)
     {
+        $taskForWeb = [];
         foreach ($taskEntityList as $key => $taskEntity) {
             $taskForWeb[$key]['id'] = $taskEntity->taskId()->value();
             $taskForWeb[$key]['status'] = $taskEntity->status()->value();
