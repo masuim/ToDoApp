@@ -78,7 +78,7 @@ if (isset($_POST['editTaskButton'])) {
               <input class="border-gray-700 rounded h-5 w-50 p-4 border-2 mr-5 border-2 border-gray-700 text-gray-500" type="date" name="editDate" value="<?php echo $taskDate[0][
                   'deadline'
               ]; ?>">
-              <button name="editTaskButton" type="submit" class="bg-blue-500 hover:bg-blue-700 text-white  py-2 px-4 rounded">更新</button>
+              <button name="editTaskButton" type="submit" class="bg-indigo-500 hover:bg-indigo-700 text-white  py-2 px-4 rounded">更新</button>
             </div>
           </form>
         </div>
