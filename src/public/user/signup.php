@@ -26,7 +26,7 @@ $mail = $formInputs['mail'] ?? '';
         <h2 class="text-2xl text-gray-700 pb-5">会員登録</h2>
         <?php if ($errors): ?>
           <?php foreach ($errors as $error): ?>
-            <p class="text-red-600"><?php echo $error; ?></p>
+            <p class="text-red-600 text-xs mb-2"><?php echo $error; ?></p>
           <?php endforeach; ?>
         <?php endif; ?>
         <form action="./signup_complete.php" method="POST">
@@ -37,6 +37,11 @@ $mail = $formInputs['mail'] ?? '';
           <button class='bg-indigo-400 hover:bg-indigo-700 text-white py-1 px-2 rounded mb-5 w-full' type="submit">アカウント作成</button>
         </form>
         <a class="text-indigo-600" href="./signin.php">ログイン画面へ</a>
+        <div class="text-left text-xs text-gray-400">
+          <p class="mt-3 mb-2">登録条件は下記となります</p>
+          <p class="my-2">User name : 1〜20文字</p>
+          <p>Password : 半角英小文字と大文字、数字を各1種類以上含む8〜100文字</p>
+        </div>
       </div>
     </div>
   </body>

@@ -8,7 +8,7 @@ use Exception;
 final class CategoryName
 {
     const MAX_WORDCOUNT = 40;
-    const INVALID_MESSAGE = 'カテゴリーは40文字以下でお願いします！';
+    const INVALID_MESSAGE = 'カテゴリーは40文字以下でお願いします';
 
     /**
      * @var string

@@ -61,10 +61,10 @@ if (isset($_POST['editTaskButton'])) {
     <div class="h-screen flex justify-center items-center">
         <div class="flex justify-center">
           <form action="" method="post">
+            <h1 class="flex justify-center text-2xl text-gray-800 mb-10">タスク編集</h1>
             <?php if (isset($error)): ?>
-              <p class="text-red-600"><?php echo $error; ?></p>
+              <p class="text-red-600 mb-5"><?php echo $error; ?></p>
             <?php endif; ?>
-            <h1 class="flex justify-center text-2xl text-gray-800 mb-20">タスク編集</h1>
             <div class="flex">
               <select name="selectCategory" class="rounded mr-5 text-gray-500 border-2 border-gray-700">
                 <option class="text-right" value="<?php echo $selectCategoryName["name"]; ?>" name="categoryName" selected><?php echo $selectCategoryName["name"]; ?></option>
