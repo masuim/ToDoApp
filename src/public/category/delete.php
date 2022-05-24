@@ -19,9 +19,10 @@ $tasksDao = new TasksDao();
 $taskDate = $tasksDao->selectCategories($userId, $categoryId);
 
 if ($taskDate) {
-    $error =
-        '削除しようとしているカテゴリーを使用しているタスクがあるため、削除できません';
-    Redirect::handler("index.php?error=$error");
+    $session->appendError(
+        '削除しようとしているカテゴリーを使用しているタスクがあるため、削除できません'
+    );
+    Redirect::handler('index.php?error');
 } else {
     $categoriesDao = new CategoriesDao();
     $categoriesDao->deleteCategory($categoryId);
