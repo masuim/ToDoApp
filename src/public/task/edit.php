@@ -46,7 +46,7 @@ if (isset($_POST['editTaskButton'])) {
 ?>
 
 <!DOCTYPE html>
-  <html lang="ja">
+<html lang="ja">
   <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -58,34 +58,30 @@ if (isset($_POST['editTaskButton'])) {
     <header>
       <?php require_once __DIR__ . '/../../app/Lib/header.php'; ?>
     </header>
-    <div class="bg-gray-200 w-full h-screen flex justify-center items-center">
-      <div class="w-4/5  bg-white pt-10 pb-10 rounded-xl">
-        <div class="w-full">
+    <div class="h-screen flex justify-center items-center">
+        <div class="flex justify-center">
           <form action="" method="post">
             <?php if (isset($error)): ?>
               <p class="text-red-600"><?php echo $error; ?></p>
             <?php endif; ?>
+            <h1 class="flex justify-center text-2xl text-gray-800 mb-20">タスク編集</h1>
             <div class="flex">
-              <select name="selectCategory">
+              <select name="selectCategory" class="rounded mr-5 text-gray-500 border-2 border-gray-700">
                 <option class="text-right" value="<?php echo $selectCategoryName["name"]; ?>" name="categoryName" selected><?php echo $selectCategoryName["name"]; ?></option>
                 <?php foreach ( $getCategories as $value ) : ?>
                   <option class="text-right" value="<?php echo $value["name"]; ?>" name="categoryName"><?php echo $value["name"]; ?></option>
                 <? endforeach; ?>
               </select>
-              <input class="border-black h-5 w-50 p-4 border-2 bg-white" type="text" name="editTask" value="<?php echo $taskDate[0][
+              <input class="border-gray-700 rounded h-5 w-50 p-4 border-2 mr-5 border-2 border-gray-700 text-gray-500" type="text" name="editTask" value="<?php echo $taskDate[0][
                   'contents'
               ]; ?>">
-              <input class="border-black h-5 w-50 p-4 border-2 bg-white" type="date" name="editDate" value="<?php echo $taskDate[0][
+              <input class="border-gray-700 rounded h-5 w-50 p-4 border-2 mr-5 border-2 border-gray-700 text-gray-500" type="date" name="editDate" value="<?php echo $taskDate[0][
                   'deadline'
               ]; ?>">
-              <button name="editTaskButton" type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">更新</button>
+              <button name="editTaskButton" type="submit" class="bg-blue-500 hover:bg-blue-700 text-white  py-2 px-4 rounded">更新</button>
             </div>
           </form>
-          <div>
-            <a class="text-blue-600 ml-20" href="./../index.php">戻る</a>
-          </div>
         </div>
-      </div>
     </div>
   </body>
 </html>

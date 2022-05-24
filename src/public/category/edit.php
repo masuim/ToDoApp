@@ -24,7 +24,7 @@ $categoryName = $categoriesDao->selectCategoryName($categoryId);
 
 if (isset($_POST['updateCategory'])) {
     if (empty($_POST['updateCategory'])) {
-        $error = '更新に失敗しました。カテゴリを確認してください';
+        $error = 'カテゴリを入力してください';
     } else {
         $updateCategory = filter_input(
             INPUT_POST,
@@ -51,23 +51,24 @@ if (isset($_POST['updateCategory'])) {
     <header>
       <?php require_once __DIR__ . '/../../app/Lib/header.php'; ?>
     </header>
-    <div class="bg-gray-200 w-full h-screen flex justify-center items-center">
-      <div class="w-1/2  bg-white pt-10 pb-10 rounded-xl">
+    <div class="h-screen flex justify-center items-center">
+      <div class="w-1/2 pt-10 pb-10 rounded-xl">
         <div class="w-full">
           <form action="" method="post">
+            <h1 class="flex justify-center text-2xl text-gray-800 mb-10">カテゴリー編集</h1>
             <?php if (isset($error)): ?>
-              <p class="text-red-600"><?php echo $error; ?></p>
+              <p class="text-red-600 mb-5"><?php echo $error; ?></p>
             <?php endif; ?>
-            <div>
-              <input class="border-black h-5 w-50 p-4 border-2 bg-white" type="text" name="updateCategory"placeholder="<?php echo $categoryName[
+            <div class="mb-5 text-right">
+              <a class="text-indigo-600" href="./index.php">カテゴリー一覧に戻る</a>
+            </div>
+            <div class="flex justify-center">
+              <input class="border-gray-700 h-5 w-70 p-4 mb-5 border-2 rounded" type="text" name="updateCategory"placeholder="<?php echo $categoryName[
                   'name'
               ]; ?>">
-              <button name="updateCategoryButton" type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">更新</button>
+              <button name="updateCategoryButton" type="submit" class="bg-indigo-400 hover:bg-indigo-700 text-white h-9 py-2 px-4 ml-5 rounded">更新</button>
             </div>
           </form>
-          <div>
-            <a class="text-blue-600" href="./index.php">戻る</a>
-          </div>
         </div>
       </div>
     </div>

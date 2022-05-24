@@ -38,7 +38,7 @@ if (isset($_POST['createTask'])) {
       Redirect::handler("store.php?userId=$userId & contents=$contents & id=$id & deadline=$deadline");
     }
   } else {
-    $error = "タスク内容または日付を入力してください";
+    $error = "未入力の項目があります";
   }
 }
 ?>
@@ -56,31 +56,29 @@ if (isset($_POST['createTask'])) {
     <header>
       <?php require_once __DIR__ . '/../../app/Lib/header.php'; ?>
     </header>
-    <div class="bg-gray-200 w-full h-screen flex justify-center items-center">
-      <div class="w-4/5  bg-white pt-10 pb-10 rounded-xl">
-        <div class="w-full flex justify-center">
-          <form action="" method="post">
-            <?php if (isset($error)): ?>
-              <p class="text-red-600"><?php echo $error; ?></p>
-            <?php endif; ?>
-            <div>
-              <a class="text-blue-600 ml-20" href="./../category/index.php">カテゴリを追加</a>
-            </div>
-            <div class="flex">
-              <select name="selectCategory">
-                <option value=""><?php echo "カテゴリーを選んでください"; ?></option>
-                  <?php foreach ( $getCategories as $value ) : ?>
-                    <option class="text-right" value="<?php echo $value["name"]; ?>" name="categoryName"><?php echo $value["name"]; ?></option>
-                  <? endforeach; ?>
-              </select>
-              <input class="border-black h-5 w-50 p-4 border-2 bg-white" type="text" name="addTask" placeholder="タスクを追加">
-              <input class="border-black h-5 w-50 p-4 border-2 bg-white" type="date" name="date">
-              <button name="createTask" type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">追加</button>
-            </div>
-          </form>
-        <div>
-        <a class="text-blue-600 ml-20" href="./../index.php">戻る</a>
-      </div>
+    <div class="h-screen flex justify-center items-center">
+      <div class="flex justify-center">
+        <form action="" method="post">
+          <h1 class="flex justify-center text-2xl text-gray-800 mb-10">タスク登録</h1>
+          <?php if (isset($error)): ?>
+            <p class="text-red-600 mb-5"><?php echo $error; ?></p>
+          <?php endif; ?>
+          <div class="mb-10">
+            <a class="text-green-500" href="./../category/index.php">カテゴリを追加</a>
+          </div>
+          <div class="flex">
+            <select name="selectCategory" class="rounded mr-5 text-gray-500 border-2 border-gray-700">
+              <option value=""><?php echo "カテゴリーを選んでください"; ?></option>
+                <?php foreach ( $getCategories as $value ) : ?>
+                  <option class="text-right" value="<?php echo $value["name"]; ?>" name="categoryName"><?php echo $value["name"]; ?></option>
+                <? endforeach; ?>
+            </select>
+            <input class="border-gray-700 rounded h-5 w-60 p-4 mr-5 border-2 border-gray-700 text-gray-500" type="text" name="addTask" placeholder="タスクを入力してください">
+            <input class="border-gray-700 rounded h-5 w-50 p-4 mr-5 border-2 border-gray-700 text-gray-500" type="date" name="date">
+            <button name="createTask" type="submit" class="bg-indigo-400 hover:bg-indigo-700 text-white  py-2 px-4 rounded">追加</button>
+          </div>
+        </form>
+      <div>
     </div>
   </body>
 </html>

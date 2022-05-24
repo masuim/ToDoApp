@@ -8,18 +8,17 @@
     <title>ToDoアプリ</title>
   </head>
 <header>
-  <div class="w-full bg-blue-500 text-white">
-    <nav class="bg-blue-500 text-white shadow-lg">
+  <div class="w-full">
+    <nav class="bg-indigo-300 text-white shadow-lg">
       <div class="md:flex items-center justify-between py-2 px-8 md:px-12">
         <div class="flex justify-between items-center">
-          <div class="text-2xl font-bold text-gray-800 md:text-3xl">
-          </div>
+          <div class="text-2xl  text-gray-800 md:text-3xl"></div>
         </div>
-        <div class="mr-auto">ToDoアプリ</div>
+        <div class="mr-auto text-2xl">ToDoアプリ</div>
         <div class="flex flex-col md:flex-row hidden md:block -mx-2">
-          <a href="http://localhost:8080/index.php" class="text-white rounded hover:bg-blue-700 hover:text-white hover:font-medium py-2 px-2 md:mx-2">ホーム</a>
-          <a href="http://localhost:8080/category/index.php" class="text-white rounded hover:bg-blue-700 hover:text-white hover:font-medium py-2 px-2 md:mx-2">カテゴリ一覧</a>
-          <a href="http://localhost:8080/user/logout.php" class="text-white rounded hover:bg-blue-700 hover:text-white hover:font-medium py-2 px-2 md:mx-2">ログアウト</a>
+          <a href="http://localhost:8080/index.php" class="text-white rounded hover:bg-indigo-400 hover:text-white hover:font-medium py-2 px-2 md:mx-2">ホーム</a>
+          <a href="http://localhost:8080/category/index.php" class="text-white rounded hover:bg-indigo-400 hover:text-white hover:font-medium py-2 px-2 md:mx-2">カテゴリ一覧</a>
+          <a href="http://localhost:8080/user/logout.php" class="text-white rounded hover:bg-indigo-400 hover:text-white hover:font-medium py-2 px-2 md:mx-2">ログアウト</a>
         </div>
       </div>
     </nav>
