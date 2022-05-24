@@ -60,7 +60,7 @@ $categories = $categoriesDao->selectCategories($userId);
           <a class="text-indigo-600" href="/task/create.php">タスク登録画面に戻る</a>
         </div>
         <div class="block">
-          <input class="border-gray-700 h-5 w-80 p-4 mb-5 border-2 rounded" type="text" name="categoryName" placeholder="カテゴリーを入力してください">
+          <input class="border-gray-700 h-5 w-60 p-4 mb-5 border-2 rounded" type="text" name="categoryName" placeholder="カテゴリーを入力">
           <button name="createCategoryButton" type="submit" class="bg-indigo-400 hover:bg-indigo-700 text-white  py-2 px-4 rounded">登録</button>
         </div>
         <table class="table-auto">
