@@ -18,7 +18,7 @@ final class InputPassword
     /**
      * パスワードの書式が不正な場合のエラーメッセージ
      */
-    const INVALID_MESSAGE = 'パスワードの形式が正しくありません';
+    const INVALID_MESSAGE = 'パスワードは半角英小文字と大文字、数字を各1種類以上含む8〜100文字で登録してください';
 
     /**
      * @var string

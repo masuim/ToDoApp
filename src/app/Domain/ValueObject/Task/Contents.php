@@ -8,7 +8,7 @@ use Exception;
 final class Contents
 {
     const MAX_WORDCOUNT = 200;
-    const INVALID_MESSAGE = 'タスクは200文字以下でお願いします！';
+    const INVALID_MESSAGE = 'タスクは200文字以下でお願いします';
 
     /**
      * @var string

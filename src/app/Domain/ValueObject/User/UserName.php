@@ -10,7 +10,7 @@ final class UserName
     /**
      * ユーザーの名前が不正な場合のエラーメッセージ
      */
-    const INVALID_MESSAGE = 'ユーザー名は20文字以下でお願いします！';
+    const INVALID_MESSAGE = 'ユーザー名は20文字以下で登録してください';
 
     /**
      * @var string

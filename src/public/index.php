@@ -79,15 +79,15 @@ if(isset($_POST['isComplete'])){
     <header>
       <?php require_once __DIR__ . '/../app/Lib/header.php'; ?>
     </header>
-    <div class="text-sm w-4/5 bg-white ml-20 mr-20 mt-10 pl-10 py-10 justify-center items-center rounded-lg shadow-xl">
+    <div class="text-xs w-4/5 bg-white ml-20 mr-20 mt-10 pl-10 py-10 justify-center items-center rounded-lg shadow-xl">
       <form action="" method="post">
         <div class="inline">
           <input class="border-gray-700 h-5 w-50 p-4 mx-5 border-2 rounded" type="textarea" name="searchWord" placeholder="タスク名キーワード入力" value="<?php echo $search ??
               ''; ?>">
         </div>
         <div class="inline mr-5">
-          <label><input type="radio" name="order" value="asc">新しい順</label>
-          <label><input type="radio" name="order" value="desc">古い順</label>
+          <label><input type="radio" name="order" value="asc">締切日が近い順</label>
+          <label><input type="radio" name="order" value="desc">締切日が遠い順</label>
         </div>
         <div class="inline mr-5">
           <select name="selectCategory">
@@ -102,7 +102,7 @@ if(isset($_POST['isComplete'])){
           <label><input type="radio" name="isComplete" value="complete">完了</label>
         </div>
         <button type="submit" class="inline bg-indigo-400 hover:bg-indigo-700 text-white mt-1 mr-5 py-1 px-4 rounded">検索・並び替え・絞り込み</button>
-        <button type="submit" class="inline border border-indigo-700 text-indigo-400 hover:bg-indigo-200 text-white mt-1 py-1 px-4 rounded">元に戻す</button>
+        <button type="submit" class="inline border border-indigo-700 text-indigo-400 hover:bg-indigo-200 text-white mt-1 py-1 px-4 rounded">全件表示に戻す</button>
       </form>
     </div>
     <div class="ml-20 mr-20 mt-10 justify-center items-center">
